@@ -7,23 +7,21 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class PasswordGenerator {
-    private static final PasswordVerifier PASSWORD_VERIFIER = new PasswordVerifier();
     public String passwordGenerate() {
+        String aplhLower = "abcdefghijklmnopqrstuvwxyz";
+        String digits = "0123456789";
+        String specs = "!\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~.\"";
         //генерация данных для генерации пароля
         PasswordData passwordData = new PasswordData();
 
         //строки с символами пароля
         StringBuilder charsForPassword = new StringBuilder();
 
-        //добавление в пароль нужного количества букв в нижнем регистре...
-        addChars(charsForPassword, passwordData.alphaLowerCaseToGenerate, Enum.a.get(), Enum.z.get(), false);
-        addChars(charsForPassword, passwordData.alphaUpperCaseToGenerate, Enum.A.get(), Enum.Z.get(), false);
-        addChars(charsForPassword, passwordData.numToGenerate, Enum.ZERO.get(), Enum.NINE.get(), false);
-
-        //добавление в пароль нужного количества спец-символом,
-        //т.к. спец-символы разбросаны по кодировке,
-        //для них написан отдельный обработчик, который активирует 4 параметр (boolean)
-        addChars(charsForPassword, passwordData.specToGenerate, -1, -1, true);
+        //добавление в пароль нужного количества всех символов...
+        addChars(charsForPassword, passwordData.getAlphaLowerCase(), aplhLower);
+        addChars(charsForPassword, passwordData.getAlphaUpperCase(), aplhLower.toUpperCase());
+        addChars(charsForPassword, passwordData.getNums(), digits);
+        addChars(charsForPassword, passwordData.getSpecs(), specs);
 
         String password = charsForPassword.toString();
         do {
@@ -39,34 +37,15 @@ public class PasswordGenerator {
                     .collect(Collectors.joining(""));
 
             //перемешиваем пароль, пока в он не станет соответствовать требованиям
-        } while(!PASSWORD_VERIFIER.passwordVerify(password));
+        } while(!(new PasswordVerifier()).passwordVerify(password));
 
         return password;
     }
 
     //метод, который добавляет в StringBuilder определенное количество заданных символов
-    private static void addChars(StringBuilder charsForPassword, int countToAdd, int from, int to, boolean spec) {
+    private static void addChars(StringBuilder charsForPassword, int countToAdd, String charSeq) {
         for (; countToAdd > 0; --countToAdd) {
-            //если нужно добавить буквы или цифры
-            if (!spec) {
-                charsForPassword.append((char) ThreadLocalRandom.current().nextInt(from, to + 1));
-                //если нужно добавить спец-символы
-            } else {
-                switch (ThreadLocalRandom.current().nextInt(0, 4)) {
-                    case 0 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current()
-                                    .nextInt(Enum.MARK.get(), Enum.SLASH.get() + 1));
-                    case 1 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current()
-                                    .nextInt(Enum.TWO_DOT.get(), Enum.DOG.get() + 1));
-                    case 2 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current()
-                                    .nextInt(Enum.START_ARR.get(), Enum.APOS.get() + 1));
-                    case 3 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current()
-                                    .nextInt(Enum.START_FIGURE.get(), Enum.TILDA.get() + 1));
-                }
-            }
+            charsForPassword.append(charSeq.charAt(ThreadLocalRandom.current().nextInt(0, charSeq.length())));
         }
     }
 }

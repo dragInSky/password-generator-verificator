@@ -3,7 +3,7 @@ package org.password;
 import java.util.concurrent.ThreadLocalRandom;
 
 class PasswordData {
-    public int alphaLowerCaseToGenerate, alphaUpperCaseToGenerate, numToGenerate, specToGenerate;
+    private int alphaLowerCaseToGenerate, alphaUpperCaseToGenerate, numToGenerate, specToGenerate;
 
     PasswordData() {
         //генерация длины пароля
@@ -26,5 +26,18 @@ class PasswordData {
                 .nextInt(Req.MIN_NUM.get(), Req.MIN_NUM.get() + tmpCurrentLength + 1);
 
         specToGenerate = passwordLength - alphaLowerCaseToGenerate - alphaUpperCaseToGenerate - numToGenerate;
+    }
+
+    public int getAlphaLowerCase() {
+        return alphaLowerCaseToGenerate;
+    }
+    public int getAlphaUpperCase() {
+        return alphaUpperCaseToGenerate;
+    }
+    public int getNums() {
+        return numToGenerate;
+    }
+    public int getSpecs() {
+        return specToGenerate;
     }
 }

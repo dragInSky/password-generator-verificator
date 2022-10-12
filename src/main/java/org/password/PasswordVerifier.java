@@ -114,7 +114,7 @@ public class PasswordVerifier {
             if (!bFlag) {
                 throw new SimpleException("В пароле должны содержать только символы латинского алфавита, " +
                         "цифры и спец-символы (см. ниже)" +
-                        "\n\t! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~.");
+                        "\n\t! \" # $ % & ' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _ ` { | } ~ .");
             }
         } catch (SimpleException e) {
             System.out.println(e.getMessage());
