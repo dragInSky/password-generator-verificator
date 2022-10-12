@@ -1,15 +1,15 @@
 package org.password;
 
 class SymbolsCountException extends Exception {
-    private final int req;
+    private final int m_req;
 
     SymbolsCountException(String message, int req) {
         super(message);
-        this.req = req;
+        m_req = req;
     }
 
     @Override
     public String getMessage() {
-        return super.getMessage() + req;
+        return super.getMessage() + m_req;
     }
 }

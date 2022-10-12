@@ -7,6 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class PasswordGenerator {
+    //строка с символами пароля
+    private static final StringBuilder charsForPassword = new StringBuilder();
     public String passwordGenerate() {
         String aplhLower = "abcdefghijklmnopqrstuvwxyz";
         String digits = "0123456789";
@@ -14,14 +16,11 @@ public class PasswordGenerator {
         //генерация данных для генерации пароля
         PasswordData passwordData = new PasswordData();
 
-        //строки с символами пароля
-        StringBuilder charsForPassword = new StringBuilder();
-
         //добавление в пароль нужного количества всех символов...
-        addChars(charsForPassword, passwordData.getAlphaLowerCase(), aplhLower);
-        addChars(charsForPassword, passwordData.getAlphaUpperCase(), aplhLower.toUpperCase());
-        addChars(charsForPassword, passwordData.getNums(), digits);
-        addChars(charsForPassword, passwordData.getSpecs(), specs);
+        addChars(passwordData.getAlphaLowerCase(), aplhLower);
+        addChars(passwordData.getAlphaUpperCase(), aplhLower.toUpperCase());
+        addChars(passwordData.getNums(), digits);
+        addChars(passwordData.getSpecs(), specs);
 
         String password = charsForPassword.toString();
         do {
@@ -43,7 +42,7 @@ public class PasswordGenerator {
     }
 
     //метод, который добавляет в StringBuilder определенное количество заданных символов
-    private static void addChars(StringBuilder charsForPassword, int countToAdd, String charSeq) {
+    private static void addChars(int countToAdd, String charSeq) {
         for (; countToAdd > 0; --countToAdd) {
             charsForPassword.append(charSeq.charAt(ThreadLocalRandom.current().nextInt(0, charSeq.length())));
         }

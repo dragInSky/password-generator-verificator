@@ -3,7 +3,7 @@ package org.password;
 import java.util.concurrent.ThreadLocalRandom;
 
 class PasswordData {
-    private int alphaLowerCaseToGenerate, alphaUpperCaseToGenerate, numToGenerate, specToGenerate;
+    private final int alphaLowerCaseToGenerate, alphaUpperCaseToGenerate, numToGenerate, specToGenerate;
 
     PasswordData() {
         //генерация длины пароля

@@ -24,8 +24,7 @@ public class PasswordVerifier {
         }
 
         try {
-            if (!Pattern.compile("([^a-z]*[a-z][^a-z]*){" + Req.MIN_ALPHA_LOWER.get() + ",}")
-                    .matcher(passwordToVerify).matches()) {
+            if (!match("([^a-z]*[a-z][^a-z]*){" + Req.MIN_ALPHA_LOWER.get() + ",}", passwordToVerify)) {
                 throw new SymbolsCountException("Введенный вами парольне не содержит нужного количества " +
                         "букв латинского алфавита в нижнем регистре: ",
                         Req.MIN_ALPHA_LOWER.get());
@@ -36,8 +35,7 @@ public class PasswordVerifier {
         }
 
         try {
-            if (!Pattern.compile("([^A-Z]*[A-Z][^A-Z]*){" + Req.MIN_ALPHA_UPPER.get() + ",}")
-                    .matcher(passwordToVerify).matches()) {
+            if (!match("([^A-Z]*[A-Z][^A-Z]*){" + Req.MIN_ALPHA_UPPER.get() + ",}", passwordToVerify)) {
                 throw new SymbolsCountException("Введенный вами парольне не содержит нужного количества " +
                         "букв латинского алфавита в верхнем регистре: ",
                         Req.MIN_ALPHA_UPPER.get());
@@ -48,7 +46,7 @@ public class PasswordVerifier {
         }
 
         try {
-            if (!Pattern.compile("(\\D*\\d\\D*){" + Req.MIN_NUM.get() + ",}").matcher(passwordToVerify).matches()) {
+            if (!match("(\\D*\\d\\D*){" + Req.MIN_NUM.get() + ",}", passwordToVerify)) {
                 throw new SymbolsCountException("Введенный вами парольне не содержит нужного количества цифр: ",
                         Req.MIN_NUM.get());
             }
@@ -58,8 +56,7 @@ public class PasswordVerifier {
         }
 
         try {
-            if (!Pattern.compile("([^\\W]*[\\W_][^\\W]*){" + Req.MIN_SPEC.get() + ",}")
-                    .matcher(passwordToVerify).matches()) {
+            if (!match("([^\\W]*[\\W_][^\\W]*){" + Req.MIN_SPEC.get() + ",}", passwordToVerify)) {
                 throw new SymbolsCountException("Введенный вами парольне не содержит нужного количества " +
                         "спец-символов: ",
                         Req.MIN_SPEC.get());
@@ -70,6 +67,10 @@ public class PasswordVerifier {
         }
 
         return res;
+    }
+
+    private static boolean match(String regex, String passwordToVerify) {
+        return Pattern.compile(regex).matcher(passwordToVerify).matches();
     }
 
     private static boolean notTrivial(String passwordToVerify) {

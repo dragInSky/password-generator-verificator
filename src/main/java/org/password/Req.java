@@ -8,13 +8,13 @@ public enum Req {
     MIN_NUM(1),
     MIN_SPEC(1);
 
-    private final int symbols;
+    private final int m_symbols;
 
     Req(int symbols) {
-        this.symbols = symbols;
+        m_symbols = symbols;
     }
 
     public int get() {
-        return symbols;
+        return m_symbols;
     }
 }
