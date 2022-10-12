@@ -3,7 +3,7 @@ package org.password;
 import java.util.regex.Pattern;
 
 public class PasswordVerifier {
-    public static boolean passwordVerify(String passwordToVerify) {
+    public boolean passwordVerify(String passwordToVerify) {
         //объединяем все функции проверки на корректность пароля
         return accordedSymbols(passwordToVerify) & notTrivial(passwordToVerify) & allowedSymbols(passwordToVerify);
     }

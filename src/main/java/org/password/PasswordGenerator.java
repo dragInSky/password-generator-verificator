@@ -7,7 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class PasswordGenerator {
-    public static String passwordGenerate() {
+    private static final PasswordVerifier PASSWORD_VERIFIER = new PasswordVerifier();
+    public String passwordGenerate() {
         //генерация данных для генерации пароля
         PasswordData passwordData = new PasswordData();
 
@@ -38,13 +39,13 @@ public class PasswordGenerator {
                     .collect(Collectors.joining(""));
 
             //перемешиваем пароль, пока в он не станет соответствовать требованиям
-        } while(!PasswordVerifier.passwordVerify(password));
+        } while(!PASSWORD_VERIFIER.passwordVerify(password));
 
         return password;
     }
 
     //метод, который добавляет в StringBuilder определенное количество заданных символов
-    public static void addChars(StringBuilder charsForPassword, int countToAdd, int from, int to, boolean spec) {
+    private static void addChars(StringBuilder charsForPassword, int countToAdd, int from, int to, boolean spec) {
         for (; countToAdd > 0; --countToAdd) {
             //если нужно добавить буквы или цифры
             if (!spec) {
