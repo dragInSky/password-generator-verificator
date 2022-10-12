@@ -7,15 +7,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-        System.out.println("Хотите сгенерировать пароль\n" +
-                "\tyes - да, no - нет\t");
+        System.out.println("Хотите сгенерировать пароль" +
+                "\n\tyes - да, no - нет");
 
         String password;
         if (Objects.equals(in.nextLine(), "yes")) {
             password = PasswordGenerator.passwordGenerate();
         } else {
             do {
-                System.out.println("\nПридумайте пароль\n");
+                System.out.print("\nПридумайте пароль. " +
+                        "\nВведите его здесь -> ");
                 password = in.nextLine();
             } while (!PasswordVerifier.passwordVerify(password));
         }

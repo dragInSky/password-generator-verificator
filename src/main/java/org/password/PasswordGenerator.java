@@ -20,7 +20,8 @@ public class PasswordGenerator {
         addChars(charsForPassword, passwordData.numToGenerate, Enum.ZERO.get(), Enum.NINE.get(), false);
 
         //добавление в пароль нужного количества спец-символом,
-        //т.к. спец-символы разбросаны по кодировке, для них написан отдельный обработчик, его активирует 4 параметр (boolean)
+        //т.к. спец-символы разбросаны по кодировке,
+        //для них написан отдельный обработчик, который активирует 4 параметр (boolean)
         addChars(charsForPassword, passwordData.specToGenerate, -1, -1, true);
 
         String password = charsForPassword.toString();
@@ -52,13 +53,17 @@ public class PasswordGenerator {
             } else {
                 switch (ThreadLocalRandom.current().nextInt(0, 4)) {
                     case 0 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current().nextInt(Enum.MARK.get(), Enum.SLASH.get() + 1));
+                            charsForPassword.append((char) ThreadLocalRandom.current()
+                                    .nextInt(Enum.MARK.get(), Enum.SLASH.get() + 1));
                     case 1 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current().nextInt(Enum.TWO_DOT.get(), Enum.DOG.get() + 1));
+                            charsForPassword.append((char) ThreadLocalRandom.current()
+                                    .nextInt(Enum.TWO_DOT.get(), Enum.DOG.get() + 1));
                     case 2 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current().nextInt(Enum.START_ARR.get(), Enum.APOS.get() + 1));
+                            charsForPassword.append((char) ThreadLocalRandom.current()
+                                    .nextInt(Enum.START_ARR.get(), Enum.APOS.get() + 1));
                     case 3 ->
-                            charsForPassword.append((char) ThreadLocalRandom.current().nextInt(Enum.START_FIGURE.get(), Enum.TILDA.get() + 1));
+                            charsForPassword.append((char) ThreadLocalRandom.current()
+                                    .nextInt(Enum.START_FIGURE.get(), Enum.TILDA.get() + 1));
                 }
             }
         }
